@@ -685,6 +685,8 @@ void converge_preDrawFunc()
     logFile << "optimization converged, with " << optimizer->getInnerIterAmt() << " inner iterations in " << secPast << "s." << std::endl;
     spdlog::info("simulation finished");
     outerLoopFinished = true;
+    optimizer->exportMinNonzeroMatrix("minMat.txt");
+    optimizer->exportMaxNonzeroMatrix("maxMat.txt");
 }
 
 #ifdef USE_OPENGL

@@ -117,6 +117,18 @@ protected: // dynamic information
     double beta_NM; // \in [1/4,1/2], default 1/4
     double gamma_NM; // \in [0,1], default 1/2
 
+    // we want to record the matrix with maximum nonzeros and minimum nonzeros
+    Eigen::VectorXi max_ia;
+    Eigen::VectorXi max_ja;
+    Eigen::VectorXd max_a;
+
+    Eigen::VectorXi min_ia;
+    Eigen::VectorXi min_ja;
+    Eigen::VectorXd min_a;
+
+    int max_nonZero = 0;
+    int min_nonZero = 99999999;
+
 public: // constructor and destructor
     Optimizer(const Mesh<dim>& p_data0,
         const std::vector<Energy<dim>*>& p_energyTerms,
@@ -127,6 +139,8 @@ public: // constructor and destructor
         const Eigen::VectorXi& bnd = Eigen::VectorXi(),
         const Config& animConfig = Config());
     virtual ~Optimizer(void);
+    void exportMinNonzeroMatrix(const std::string& file_name);
+    void exportMaxNonzeroMatrix(const std::string& file_name);
 
 public: // API
     virtual void setTime(double duration, double dt);
@@ -243,7 +257,7 @@ protected: // helper functions
     virtual void postLineSearch(double alpha);
 
     // solve for new configuration in the next iteration
-    //NOTE: must compute current gradient first
+    // NOTE: must compute current gradient first
     virtual bool solve_oneStep(void);
 
     virtual void computeConstraintSets(const Mesh<dim>& data, bool rehash = true);
