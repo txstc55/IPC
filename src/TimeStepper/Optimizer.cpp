@@ -3745,6 +3745,7 @@ void Optimizer<dim>::computePrecondMtr(const Mesh<dim>& data,
             max_ia = p_linSysSolver->get_ia();
             max_ja = p_linSysSolver->get_ja();
             max_a = p_linSysSolver->get_a();
+            exportMaxNonzeroMatrix("maxMat.txt");
         }
         if (p_linSysSolver->getNumNonzeros() < min_nonZero) {
             spdlog::warn("{:s}", "Minimum nonzero matrix set");
@@ -3752,6 +3753,7 @@ void Optimizer<dim>::computePrecondMtr(const Mesh<dim>& data,
             min_ia = p_linSysSolver->get_ia();
             min_ja = p_linSysSolver->get_ja();
             min_a = p_linSysSolver->get_a();
+            exportMinNonzeroMatrix("minMat.txt");
         }
 
         timer_mt.stop();
